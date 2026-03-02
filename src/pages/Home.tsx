@@ -33,7 +33,7 @@ const Home: React.FC = () => {
         <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              The Finest Mangoes Delivered to Your Door
+              The  Mangoes Delivered to Your Door
             </h1>
             <p className="text-lg text-gray-700 mb-8">
               Experience the sweet, juicy taste of premium quality mangoes. 
