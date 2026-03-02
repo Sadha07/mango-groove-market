@@ -1,13 +1,31 @@
-FROM node:trixie-slim
+# Stage 1: Build the React application
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY *.json .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-RUN npm i
+# Install dependencies
+RUN npm ci
 
+# Copy the rest of the application code
 COPY . .
 
-EXPOSE 3000
+# Build the application for production
+RUN npm run build
 
-CMD ["npm","run","dev]
+# Stage 2: Serve the application using Nginx
+FROM nginx:alpine
+
+# Copy the custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy the built assets from the builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 80 to access the application
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
